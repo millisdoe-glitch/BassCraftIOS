@@ -310,3 +310,19 @@ struct LabView: View {
         }
     }
 }
+
+struct IndicatorBadge: View {
+    let title: String
+    let active: Bool
+    let color: Color
+    
+    var body: some View {
+        Text(title)
+            .font(.caption.bold())
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 8)
+            .background(active ? color : Color.gray.opacity(0.2))
+            .foregroundColor(active ? .white : .gray)
+            .cornerRadius(8)
+    }
+}
