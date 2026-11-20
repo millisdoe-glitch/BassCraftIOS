@@ -11,8 +11,15 @@ struct ContentView: View {
     @State private var subsonicFilter: Double = 28.0
     @State private var subsonicEnabled: Bool = true
     
+    // Глобальные состояния воспроизведения для синхронизации вкладок
+    @State private var isPlaying: Bool = false
+    @State private var splDb: Double = 142.4
+    @State private var isClipping: Bool = false
+    @State private var currentFrequency: Double = 35.0
+    
     var body: some View {
         TabView {
+            // Вкладка 1: Лаборатория (SPL Lab)
             NavigationStack {
                 LabView(
                     selectedDriver: $selectedDriver,
@@ -31,42 +38,58 @@ struct ContentView: View {
                 Label("Лаборатория", systemImage: "waveform.path.ecg")
             }
             
+            // Вкладка 2: Автозвук в багажнике (Trunk View & VOLTEX)
             NavigationStack {
-                BoxDesignerView(
-                    enclosureMode: $enclosureMode,
+                CarTrunkView(
+                    selectedDriver: $selectedDriver,
+                    selectedAmp: $selectedAmp,
+                    boxVolume: $boxVolume,
+                    isPlaying: $isPlaying,
+                    splDb: $splDb,
+                    isClipping: $isClipping
+                )
+                .navigationTitle("Автозвук")
+            }
+            .tabItem {
+                Label("Багажник", systemImage: "car.rear.fill")
+            }
+            
+            // Вкладка 3: Мастерская сборки (Workshop & Steps)
+            NavigationStack {
+                WorkshopAssemblyView(
                     boxVolume: $boxVolume,
                     portArea: $portArea,
                     portLength: $portLength,
-                    driver: $selectedDriver
+                    selectedDriver: $selectedDriver
                 )
-                .navigationTitle("Расчет короба")
+                .navigationTitle("Мастерская")
             }
             .tabItem {
-                Label("Короб", systemImage: "shippingbox.fill")
+                Label("Сборка", systemImage: "wrench.and.screwdriver.fill")
             }
             
+            // Вкладка 4: DJ-Пульт & Атмосфера
             NavigationStack {
-                WiringView(
-                    selectedAmp: $selectedAmp,
-                    selectedDriver: $selectedDriver,
-                    isCoilsSeries: $isCoilsSeries,
-                    subsonicFilter: $subsonicFilter,
-                    subsonicEnabled: $subsonicEnabled
+                DJConsoleView(
+                    isPlaying: $isPlaying,
+                    currentFrequency: $currentFrequency
                 )
-                .navigationTitle("Коммутация")
+                .navigationTitle("DJ & Атмосфера")
             }
             .tabItem {
-                Label("Усилитель", systemImage: "bolt.fill")
+                Label("DJ-Пульт", systemImage: "opticaldisc.fill")
             }
             
+            // Вкладка 5: Карьера и Заказы (Career)
             NavigationStack {
-                DriverSelectView(selectedDriver: $selectedDriver)
-                    .navigationTitle("Сабвуфер")
+                CareerView()
+                    .navigationTitle("Карьера")
             }
             .tabItem {
-                Label("Динамик", systemImage: "speaker.wave.2.fill")
+                Label("Карьера", systemImage: "trophy.fill")
             }
         }
-        .accentColor(.orange)
+        .accentColor(.cyan)
+        .preferredColorScheme(.dark) // Полная тёмная тема в стиле игры!
     }
 }

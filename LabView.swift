@@ -11,11 +11,13 @@ struct LabView: View {
     @Binding var subsonicFilter: Double
     @Binding var subsonicEnabled: Bool
     
-    @State private var frequency: Double = 37.0
-    @State private var gainLevel: Double = 0.75
+    @State private var frequency: Double = 35.0
+    @State private var gainLevel: Double = 0.8
     @State private var isMuted: Bool = true
     @State private var testRunning: Bool = false
     @State private var timerSeconds: Double = 0.0
+    @State private var portSmokeOpacity: Double = 0.0
+    @State private var damageWarning: String? = nil
     
     @StateObject private var audio = AudioToneEngine.shared
     
@@ -38,11 +40,18 @@ struct LabView: View {
         )
     }
     
+    // Просадка напряжения на стенде
+    var benchVoltage: Double {
+        if !testRunning { return 14.4 }
+        let sag = (simResult.deliveredPowerWatts / 2500.0) * 2.8
+        return max(10.2, 14.4 - sag)
+    }
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
                 
-                // MARK: - Датчик звукового давления SPL (Term-Lab Style)
+                // MARK: - Датчик звукового давления SPL (Term-Lab Sensor)
                 VStack(spacing: 6) {
                     HStack {
                         Image(systemName: "gauge.with.needle.fill")
@@ -51,14 +60,21 @@ struct LabView: View {
                             .font(.caption.bold())
                             .foregroundColor(.gray)
                         Spacer()
+                        // Вольтметр на стенде
+                        Text(String(format: "%.1f V", benchVoltage))
+                            .font(.system(.subheadline, design: .monospaced).bold())
+                            .foregroundColor(benchVoltage < 11.5 ? .red : .yellow)
+                        Text("·")
+                            .foregroundColor(.gray)
                         Text("\(Int(frequency)) Hz")
                             .font(.system(.subheadline, design: .monospaced))
                             .foregroundColor(.cyan)
                     }
                     
                     Text(String(format: "%.1f", testRunning ? simResult.splDb : 0.0))
-                        .font(.system(size: 58, weight: .black, design: .monospaced))
+                        .font(.system(size: 62, weight: .black, design: .monospaced))
                         .foregroundColor(simResult.isClipping ? .red : .green)
+                        .shadow(color: simResult.isClipping ? .red.opacity(0.8) : .green.opacity(0.6), radius: 10)
                     
                     Text("DECIBELS (dB)")
                         .font(.caption2.weight(.heavy))
@@ -69,39 +85,81 @@ struct LabView: View {
                 .cornerRadius(20)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
-                        .stroke(simResult.isClipping ? Color.red : Color.clear, lineWidth: 2)
+                        .stroke(simResult.isClipping ? Color.red : Color.cyan.opacity(0.4), lineWidth: 2)
                 )
                 
-                // MARK: - Интерактивный динамик с анимацией хода диффузора
+                // MARK: - Динамик и эффект дыма / воздуха из порта
                 ZStack {
                     // Корзина сабвуфера
                     Circle()
-                        .stroke(Color.gray.opacity(0.4), lineWidth: 14)
-                        .frame(width: 200, height: 200)
+                        .stroke(Color.gray.opacity(0.35), lineWidth: 16)
+                        .frame(width: 210, height: 210)
+                    
+                    // Неоновый Halo обод
+                    Circle()
+                        .stroke(simResult.isClipping ? Color.red : Color.cyan, lineWidth: 4)
+                        .frame(width: 195, height: 195)
+                        .shadow(color: simResult.isClipping ? Color.red : Color.cyan, radius: testRunning ? 10 : 2)
                     
                     // Подвес (Surround)
                     Circle()
-                        .fill(RadialGradient(colors: [Color.black, Color(white: 0.2)], center: .center, startRadius: 40, endRadius: 90))
-                        .frame(width: 180, height: 180)
+                        .fill(RadialGradient(colors: [Color.black, Color(white: 0.22)], center: .center, startRadius: 40, endRadius: 95))
+                        .frame(width: 185, height: 185)
                     
-                    // Диффузор (Cone) с динамическим увеличением хода
+                    // Диффузор (Cone)
                     Circle()
-                        .fill(RadialGradient(colors: [Color(white: 0.15), Color.black], center: .center, startRadius: 10, endRadius: 65))
+                        .fill(RadialGradient(colors: [Color(white: 0.18), Color.black], center: .center, startRadius: 10, endRadius: 65))
                         .frame(width: 140, height: 140)
-                        .scaleEffect(testRunning ? (1.0 + CGFloat(min(0.35, simResult.excursionPercent / 400.0))) : 1.0)
+                        .scaleEffect(testRunning ? (1.0 + CGFloat(min(0.35, simResult.excursionPercent / 420.0))) : 1.0)
                         .animation(.easeInOut(duration: 0.07).repeatForever(autoreverses: true), value: testRunning ? simResult.excursionPercent : 0)
                     
-                    // Колпак (Dustcap)
+                    // Колпак
                     Circle()
-                        .fill(LinearGradient(colors: [Color(white: 0.3), Color.black], startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .fill(LinearGradient(colors: [Color(white: 0.28), Color.black], startPoint: .topLeading, endPoint: .bottomTrailing))
                         .frame(width: 65, height: 65)
                         .overlay(
                             Text(selectedDriver.brand.uppercased())
                                 .font(.system(size: 9, weight: .black))
-                                .foregroundColor(.white.opacity(0.8))
+                                .foregroundColor(simResult.isClipping ? .red : .white.opacity(0.85))
                         )
+                    
+                    // Анимация дыма при перегреве катушки
+                    if simResult.isThermalOverload {
+                        Circle()
+                            .fill(Color.gray.opacity(0.6))
+                            .frame(width: 90, height: 90)
+                            .blur(radius: 12)
+                            .offset(y: -40)
+                    }
                 }
                 .padding(.vertical, 8)
+                
+                // MARK: - Предупреждения об авариях
+                if simResult.isBottomingOut {
+                    HStack {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                        Text("ОПАСНОСТЬ: ПРЕВЫШЕНИЕ ХОДА (СТУК КАТУШКИ)!")
+                            .font(.caption.bold())
+                    }
+                    .padding(8)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.orange)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+                }
+                
+                if simResult.isThermalOverload {
+                    HStack {
+                        Image(systemName: "flame.fill")
+                        Text("КРИТИЧЕСКИЙ ПЕРЕГРЕВ: КАТУШКА ДЫМИТ!")
+                            .font(.caption.bold())
+                    }
+                    .padding(8)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+                }
                 
                 // MARK: - Аварийные индикаторы
                 HStack(spacing: 12) {
@@ -110,7 +168,7 @@ struct LabView: View {
                     IndicatorBadge(title: "TEMP \(Int(simResult.coilTemperatureC))°C", active: simResult.isThermalOverload, color: .purple)
                 }
                 
-                // MARK: - Показатели мощности и нагрузки
+                // Показатели мощности и нагрузки
                 HStack(spacing: 16) {
                     VStack {
                         Text("Мощность")
@@ -137,12 +195,26 @@ struct LabView: View {
                             .foregroundColor(simResult.isBottomingOut ? .red : .primary)
                     }
                 }
-                .padding(.vertical, 6)
+                .padding(.vertical, 4)
                 
                 // MARK: - Элементы управления
                 VStack(spacing: 16) {
+                    // Быстрые пресеты частот
+                    HStack(spacing: 8) {
+                        ForEach([25, 30, 35, 40, 50], id: \.self) { hz in
+                            Button("\(hz)Hz") {
+                                frequency = Double(hz)
+                            }
+                            .font(.caption.bold())
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .background(Int(frequency) == hz ? Color.cyan : Color.gray.opacity(0.2))
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                        }
+                    }
                     
-                    // Слайдер частоты синуса (Гц)
+                    // Слайдер частоты синуса
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
                             Text("Частота сигнала:")
@@ -156,7 +228,7 @@ struct LabView: View {
                             .accentColor(.cyan)
                     }
                     
-                    // Слайдер регулятора мощности / гейна
+                    // Регулятор Gain / Громкость
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
                             Text("Уровень Gain / Громкость:")
@@ -170,7 +242,7 @@ struct LabView: View {
                             .accentColor(simResult.isClipping ? .red : .green)
                     }
                     
-                    // Кнопки запуска замера и включения звука
+                    // Кнопки запуска
                     HStack(spacing: 14) {
                         Button(action: toggleTest) {
                             HStack {
@@ -198,7 +270,6 @@ struct LabView: View {
                 .padding()
                 .background(Color(uiColor: .secondarySystemBackground))
                 .cornerRadius(20)
-                
             }
             .padding()
         }
@@ -237,21 +308,5 @@ struct LabView: View {
         } else {
             audio.stop()
         }
-    }
-}
-
-struct IndicatorBadge: View {
-    let title: String
-    let active: Bool
-    let color: Color
-    
-    var body: some View {
-        Text(title)
-            .font(.caption.bold())
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 8)
-            .background(active ? color : Color.gray.opacity(0.2))
-            .foregroundColor(active ? .white : .gray)
-            .cornerRadius(8)
     }
 }
