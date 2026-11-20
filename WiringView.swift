@@ -30,17 +30,12 @@ struct WiringView: View {
                     Text("Усилитель (Моноблок):")
                         .font(.headline)
                     
-                    Picker("Моноблок", selection: $selectedAmp.name) {
-                        ForEach(Amplifier.presets, id: \.name) { amp in
-                            Text(amp.name).tag(amp.name)
+                    Picker("Моноблок", selection: $selectedAmp) {
+                        ForEach(Amplifier.presets) { amp in
+                            Text(amp.name).tag(amp)
                         }
                     }
                     .pickerStyle(.menu)
-                    .onChange(of: selectedAmp.name) { newName in
-                        if let found = Amplifier.presets.first(where: { $0.name == newName }) {
-                            selectedAmp = found
-                        }
-                    }
                     
                     HStack {
                         VStack(alignment: .leading) {

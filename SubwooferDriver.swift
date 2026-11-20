@@ -129,12 +129,20 @@ struct SubwooferDriver: Identifiable, Equatable {
 }
 
 // MARK: - Модель моноблока (Усилителя)
-struct Amplifier: Identifiable {
-    let id = UUID()
-    let name: String
-    let ratedPower1Ohm: Double // Вт в 1 Ом
-    let ratedPower2Ohm: Double // Вт в 2 Ом
-    let ratedPower4Ohm: Double // Вт в 4 Ом
+struct Amplifier: Identifiable, Hashable, Equatable {
+    let id: UUID
+    var name: String
+    var ratedPower1Ohm: Double // Вт в 1 Ом
+    var ratedPower2Ohm: Double // Вт в 2 Ом
+    var ratedPower4Ohm: Double // Вт в 4 Ом
+    
+    init(id: UUID = UUID(), name: String, ratedPower1Ohm: Double, ratedPower2Ohm: Double, ratedPower4Ohm: Double) {
+        self.id = id
+        self.name = name
+        self.ratedPower1Ohm = ratedPower1Ohm
+        self.ratedPower2Ohm = ratedPower2Ohm
+        self.ratedPower4Ohm = ratedPower4Ohm
+    }
     
     func powerAt(impedance: Double) -> Double {
         if impedance <= 1.1 {
