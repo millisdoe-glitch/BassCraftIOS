@@ -19,6 +19,10 @@ jobs:
           sudo xcode-select -s /Applications/Xcode_15.4.app || sudo xcode-select -s /Applications/Xcode.app
           xcodebuild -version
 
+      - name: List Schemes
+        run: |
+          xcodebuild -project BassCraft.xcodeproj -list
+
       - name: Build Archive (Unsigned)
         run: |
           xcodebuild archive \
