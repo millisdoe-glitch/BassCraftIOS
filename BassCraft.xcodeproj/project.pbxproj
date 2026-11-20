@@ -1,0 +1,266 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		100000000000000000000001 /* SubwooferDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000001 /* SubwooferDriver.swift */; };
+		100000000000000000000002 /* PhysicsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000002 /* PhysicsEngine.swift */; };
+		100000000000000000000003 /* AudioToneEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000003 /* AudioToneEngine.swift */; };
+		100000000000000000000004 /* LabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000004 /* LabView.swift */; };
+		100000000000000000000005 /* BoxDesignerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000005 /* BoxDesignerView.swift */; };
+		100000000000000000000006 /* WiringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000006 /* WiringView.swift */; };
+		100000000000000000000007 /* DriverSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000007 /* DriverSelectView.swift */; };
+		100000000000000000000008 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000008 /* ContentView.swift */; };
+		100000000000000000000009 /* BassCraftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000009 /* BassCraftApp.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		000000000000000000000001 /* BassCraft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BassCraft.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		200000000000000000000001 /* SubwooferDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwooferDriver.swift; sourceTree = "<group>"; };
+		200000000000000000000002 /* PhysicsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsEngine.swift; sourceTree = "<group>"; };
+		200000000000000000000003 /* AudioToneEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioToneEngine.swift; sourceTree = "<group>"; };
+		200000000000000000000004 /* LabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabView.swift; sourceTree = "<group>"; };
+		200000000000000000000005 /* BoxDesignerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxDesignerView.swift; sourceTree = "<group>"; };
+		200000000000000000000006 /* WiringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiringView.swift; sourceTree = "<group>"; };
+		200000000000000000000007 /* DriverSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverSelectView.swift; sourceTree = "<group>"; };
+		200000000000000000000008 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		200000000000000000000009 /* BassCraftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BassCraftApp.swift; sourceTree = "<group>"; };
+		200000000000000000000010 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		300000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		400000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				200000000000000000000009 /* BassCraftApp.swift */,
+				200000000000000000000008 /* ContentView.swift */,
+				200000000000000000000004 /* LabView.swift */,
+				200000000000000000000005 /* BoxDesignerView.swift */,
+				200000000000000000000006 /* WiringView.swift */,
+				200000000000000000000007 /* DriverSelectView.swift */,
+				200000000000000000000001 /* SubwooferDriver.swift */,
+				200000000000000000000002 /* PhysicsEngine.swift */,
+				200000000000000000000003 /* AudioToneEngine.swift */,
+				200000000000000000000010 /* Info.plist */,
+				400000000000000000000002 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		400000000000000000000002 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000001 /* BassCraft.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		500000000000000000000001 /* BassCraft */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 600000000000000000000001 /* Build configuration list for PBXNativeTarget "BassCraft" */;
+			buildPhases = (
+				700000000000000000000001 /* Sources */,
+				300000000000000000000001 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BassCraft;
+			productName = BassCraft;
+			productReference = 000000000000000000000001 /* BassCraft.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		800000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					500000000000000000000001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 600000000000000000000002 /* Build configuration list for PBXProject "BassCraft" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 400000000000000000000001;
+			productRefGroup = 400000000000000000000002 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				500000000000000000000001 /* BassCraft */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		700000000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				100000000000000000000009 /* BassCraftApp.swift in Sources */,
+				100000000000000000000008 /* ContentView.swift in Sources */,
+				100000000000000000000004 /* LabView.swift in Sources */,
+				100000000000000000000005 /* BoxDesignerView.swift in Sources */,
+				100000000000000000000006 /* WiringView.swift in Sources */,
+				100000000000000000000007 /* DriverSelectView.swift in Sources */,
+				100000000000000000000001 /* SubwooferDriver.swift in Sources */,
+				100000000000000000000002 /* PhysicsEngine.swift in Sources */,
+				100000000000000000000003 /* AudioToneEngine.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		900000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		900000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		900000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.basscraft.subwooferlab;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		900000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.basscraft.subwooferlab;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		600000000000000000000001 /* Build configuration list for PBXNativeTarget "BassCraft" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				900000000000000000000003 /* Debug */,
+				900000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		600000000000000000000002 /* Build configuration list for PBXProject "BassCraft" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				900000000000000000000001 /* Debug */,
+				900000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = 800000000000000000000001 /* Project object */;
+}
